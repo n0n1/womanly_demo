@@ -102,7 +102,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         id: '1',
         name: 'Александр Петров',
         email: 'alexander.petrov@example.com',
-        avatarUrl: 'https://i.pravatar.cc/300',
+        avatarUrl: 'assets/images/avatar.jpg',
         recentActivities: _generateMockActivities(),
       );
 
@@ -471,7 +471,10 @@ class _ProfileContent extends StatelessWidget {
                             radius: 48,
                             backgroundColor: Colors.grey[200],
                             backgroundImage: profile.avatarUrl != null
-                                ? NetworkImage(profile.avatarUrl!)
+                                ? (profile.avatarUrl!.startsWith('http')
+                                          ? NetworkImage(profile.avatarUrl!)
+                                          : AssetImage(profile.avatarUrl!))
+                                      as ImageProvider
                                 : null,
                             child: profile.avatarUrl == null
                                 ? Text(
